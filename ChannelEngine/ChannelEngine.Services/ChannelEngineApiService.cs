@@ -13,7 +13,7 @@ namespace ChannelEngine.Services
             _restApiService = restApiService;
         }
 
-        public async Task<OrderCollectionResponse> FetchAllOrdersAsync()
+        public async Task<OrderCollectionResponse> FetchAllOrders()
         {
             var request = new RestRequest("orders?statuses=IN_PROGRESS", Method.GET);
             var restResponse = await _restApiService.ExecuteApiCall(request);

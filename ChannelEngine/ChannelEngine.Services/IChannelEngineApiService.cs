@@ -5,7 +5,7 @@ namespace ChannelEngine.Services
 {
     public interface IChannelEngineApiService
     {
-        Task<OrderCollectionResponse> FetchAllOrdersAsync();
+        Task<OrderCollectionResponse> FetchAllOrders();
         Task UpdateProductStock(string merchantProductNo, int stock);
     }
 }

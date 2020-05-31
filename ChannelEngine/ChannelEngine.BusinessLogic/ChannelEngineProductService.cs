@@ -18,7 +18,7 @@ namespace ChannelEngine.BusinessLogic
 
         public async Task<IList<Product>> GetProductsFromOrders()
         {
-           var ordersResponse = await _channelEngineApiService.FetchAllOrdersAsync();
+           var ordersResponse = await _channelEngineApiService.FetchAllOrders();
            if (!ordersResponse.Success) throw new ApplicationException("Error during getting data from api.");
            var orders = ordersResponse.Content;
            var orderedProducts = GetProductsFromOrders(orders);
