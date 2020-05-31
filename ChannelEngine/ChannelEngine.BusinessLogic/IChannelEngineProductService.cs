@@ -6,6 +6,7 @@ namespace ChannelEngine.BusinessLogic
 {
     public interface IChannelEngineProductService
     {
-        Task<IEnumerable<Product>> GetProductsFromOrders();
+        Task<IList<Product>> GetProductsFromOrders();
+        Task UpdateProductStock(string merchantProductNo, int stock);
     }
 }

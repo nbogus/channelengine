@@ -19,6 +19,12 @@ namespace ChannelEngine.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _channelEngineProductService.GetProductsFromOrders();
+            var productToUpdate = products.FirstOrDefault();
+            if (productToUpdate != null)
+            {
+                await _channelEngineProductService.UpdateProductStock(productToUpdate.MerchantProductNo, 25);
+            }
+           
             var productsViewModel = products.Select(p => p.MapToProductViewModel()).ToList();
             return View(productsViewModel);
         }

@@ -16,17 +16,12 @@ namespace ChannelEngine.BusinessLogic
             _channelEngineApiService = channelEngineApiService;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsFromOrders()
+        public async Task<IList<Product>> GetProductsFromOrders()
         {
            var ordersResponse = await _channelEngineApiService.FetchAllOrdersAsync();
            if (!ordersResponse.Success) throw new ApplicationException("Error during getting data from api.");
            var orders = ordersResponse.Content;
            var orderedProducts = GetProductsFromOrders(orders);
-           var productToUpdate = orderedProducts.FirstOrDefault();
-           if (productToUpdate != null)
-           {
-               await  UpdateProductStock(productToUpdate.MerchantProductNo, 25);
-           }
               
            return orderedProducts;
         }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace ChannelEngine.ConsoleApp
 {
@@ -6,7 +6,8 @@ namespace ChannelEngine.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var app = ChannelEngineCompositionRoot.Create();
+            app.Execute().GetAwaiter().GetResult();
         }
     }
 }
