@@ -1,7 +1,11 @@
-﻿namespace ChannelEngine.BusinessLogic
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using ChannelEngine.Domain;
+
+namespace ChannelEngine.BusinessLogic
 {
     public interface IChannelEngineService
     {
-        void GetOrders();
+        Task<IEnumerable<Product>> GetOrders();
     }
 }

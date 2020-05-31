@@ -123,7 +123,7 @@ namespace ChannelEngine.Services.Models
         public string BundleProductMerchantProductNo { get; set; }
         public ExtraInformation[] ExtraData { get; set; }
         public string ChannelProductNo { get; set; }
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
         public int CancellationRequestedQuantity { get; set; }
         public double UnitPriceInclVat { get; set; }
         public double FeeFixed { get; set; }

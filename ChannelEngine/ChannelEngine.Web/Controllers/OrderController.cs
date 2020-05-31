@@ -1,4 +1,7 @@
-﻿using ChannelEngine.BusinessLogic;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ChannelEngine.BusinessLogic;
+using ChannelEngine.Web.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChannelEngine.Web.Controllers
@@ -11,10 +14,11 @@ namespace ChannelEngine.Web.Controllers
             _channelEngineService = channelEngineService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            _channelEngineService.GetOrders();
-            return View();
+            var products = await _channelEngineService.GetOrders();
+            var productsViewModel = products.Select(p => p.MapToProductViewModel()).ToList();
+            return View(productsViewModel);
         }
     }
 }

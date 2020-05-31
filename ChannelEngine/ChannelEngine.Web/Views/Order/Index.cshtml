@@ -1,8 +1,39 @@
-﻿@model object
+﻿@model List<ProductViewModel>
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>Products</h2>
+<table>
+    <thead>
+    <tr>
+        <th>
+           Name
+        </th>
+        <th>
+          EAN
+        </th>
+        <th>
+          Quantity
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                @item.MerchantProductNo
+            </td>
+            <td>
+                @item.EAN
+            </td>
+            <td>
+                @item.Quantity
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
