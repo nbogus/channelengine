@@ -12,25 +12,46 @@ namespace ChannelEngine.Services
         private readonly RestClient _client = new RestClient("https://api-dev.channelengine.net/api/v2/");
         public ChannelEngineApiService()
         {
-            
         }
 
         public async Task<OrderCollectionResponse> FetchAllOrdersAsync()
         {
-            var request = new RestRequest("orders?statuses=IN_PROGRESS&apikey=541b989ef78ccb1bad630ea5b85c6ebff9ca3322", Method.GET);
-            var cancellationTokenSource = new CancellationTokenSource();
-
-            var restResponse = await _client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var request = new RestRequest("orders?statuses=IN_PROGRESS", Method.GET);
+            var restResponse = await CallChannelEngineApi(request);
             var data = JsonConvert.DeserializeObject<OrderCollectionResponse>(restResponse.Content);
             return data;
         }
 
-        public async Task SetProductStock()
+        public Task SetProductStock()
+        {
+            throw new NotImplementedException();
+        }
+
+        public  Task SetProductStock(string merchantProductNumber, int stock)
         {
             var request = new RestRequest("offer", Method.POST);
-            var cancellationTokenSource = new CancellationTokenSource();
+            request = CreateProductUpdateRequestBody(merchantProductNumber, stock, request);
 
-            var restResponse = await _client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            return CallChannelEngineApi(request);
+        }
+
+        private RestRequest CreateProductUpdateRequestBody(string merchantProductNumber, int stock, RestRequest request)
+        {
+            var requestBody = new ProductStockUpdate
+            {
+                MerchantProductNo = merchantProductNumber,
+                Stock = stock
+            };
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(requestBody);
+            return request;
+        }
+
+        private async Task<IRestResponse> CallChannelEngineApi(IRestRequest request)
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+            request.AddQueryParameter("apiKey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322");
+            return await _client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
         }
     }
 }
