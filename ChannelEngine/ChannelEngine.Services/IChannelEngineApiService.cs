@@ -1,8 +1,11 @@
-﻿namespace ChannelEngine.Services
+﻿using System.Threading.Tasks;
+using ChannelEngine.Services.Models;
+
+namespace ChannelEngine.Services
 {
     public interface IChannelEngineApiService
     {
-        void FetchAllOrders();
-        void SetProductStock();
+        Task<OrderCollectionResponse> FetchAllOrdersAsync();
+        Task SetProductStock();
     }
 }
