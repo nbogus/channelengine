@@ -4,8 +4,8 @@ using ChannelEngine.Domain;
 
 namespace ChannelEngine.BusinessLogic
 {
-    public interface IChannelEngineService
+    public interface IChannelEngineProductService
     {
-        Task<IEnumerable<Product>> GetOrders();
+        Task<IEnumerable<Product>> GetProductsFromOrders();
     }
 }

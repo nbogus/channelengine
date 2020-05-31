@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ChannelEngine.Domain;
 using ChannelEngine.Services;
@@ -9,25 +8,32 @@ using ChannelEngine.Services.Models;
 
 namespace ChannelEngine.BusinessLogic
 {
-    public class ChannelEngineService: IChannelEngineService
+    public class ChannelEngineProductService: IChannelEngineProductService
     {
         private readonly IChannelEngineApiService _channelEngineApiService;
-        public ChannelEngineService(IChannelEngineApiService channelEngineApiService)
+        public ChannelEngineProductService(IChannelEngineApiService channelEngineApiService)
         {
             _channelEngineApiService = channelEngineApiService;
         }
 
-        public async Task<IEnumerable<Product>> GetOrders()
+        public async Task<IEnumerable<Product>> GetProductsFromOrders()
         {
            var ordersResponse = await _channelEngineApiService.FetchAllOrdersAsync();
-           if (ordersResponse.Success)
+           if (!ordersResponse.Success) throw new ApplicationException("Error during getting data from api.");
+           var orders = ordersResponse.Content;
+           var orderedProducts = GetProductsFromOrders(orders);
+           var productToUpdate = orderedProducts.FirstOrDefault();
+           if (productToUpdate != null)
            {
-               var orders = ordersResponse.Content;
-               var orderedProducts = GetProductsFromOrders(orders);
-               return orderedProducts;
+               await  UpdateProductStock(productToUpdate.MerchantProductNo, 25);
            }
+              
+           return orderedProducts;
+        }
 
-           return null;
+        public async Task UpdateProductStock(string merchantProductNo, int stock)
+        {
+            await _channelEngineApiService.UpdateProductStock(merchantProductNo, stock);
         }
 
         private IList<Product> GetProductsFromOrders(IEnumerable<Order> orders)

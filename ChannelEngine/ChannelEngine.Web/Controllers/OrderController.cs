@@ -1,22 +1,24 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ChannelEngine.BusinessLogic;
 using ChannelEngine.Web.Mappers;
+using ChannelEngine.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChannelEngine.Web.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IChannelEngineService _channelEngineService;
-        public OrderController(IChannelEngineService channelEngineService)
+        private readonly IChannelEngineProductService _channelEngineProductService;
+        public OrderController(IChannelEngineProductService channelEngineProductService)
         {
-            _channelEngineService = channelEngineService;
+            _channelEngineProductService = channelEngineProductService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var products = await _channelEngineService.GetOrders();
+            var products = await _channelEngineProductService.GetProductsFromOrders();
             var productsViewModel = products.Select(p => p.MapToProductViewModel()).ToList();
             return View(productsViewModel);
         }

@@ -4,12 +4,11 @@
     {
         public string MerchantProductNo { get; set; }
         public int Stock { get; set; }
-        public int Price { get; set; }
     }
 
-    public class ProductsStockUpdateRequest
+    public class ProductStockUpdateRequest
     {
-        public ProductStockUpdate[] Products { get; set; }
+        public ProductStockUpdate[] ProductStockUpdate { get; set; }
     }
 
 }
